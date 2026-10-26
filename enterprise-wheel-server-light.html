@@ -25,6 +25,8 @@
   --blue-hover: #0C5DB5;
   --red: #D3121D;         /* Sonar Red: Advanced Security */
   --teal: #1B998B;        /* AI & agentic (2026 template accent) */
+  --gitar: #6D2A78;       /* Gitar (logo color) */
+  --gitar-deep: #6D2A78;
   --core: var(--purple); --ee: var(--blue); --adv: var(--red); --ai: var(--teal);
   --core-deep: var(--purple); --ee-deep: var(--blue); --adv-deep: var(--red); --ai-deep: var(--teal);
   --display: "Lora", Georgia, "Times New Roman", serif;
@@ -259,8 +261,8 @@ kbd { font: 500 11px var(--mono); background: #FFFFFF; border: 1px solid #DCE3EC
 #print-doc {
   --fg: #3B3F44; --muted: #5F656D; --dim: #8A94A3; --line: #E1E7F0; --bg: #F3F6FB; --bg-raise: #FFFFFF; --card: #FFFFFF; --tile: #FFFFFF;
   --ink: #0B0B0F; --n8: #3B3F44; --label: #8A94A3; --dash: #D3DAE5; --purple: #290042; --blue: #126ED3;
-  --core: #290042; --ee: #126ED3; --adv: #D3121D; --ai: #1B998B;
-  --core-deep: #290042; --ee-deep: #126ED3; --adv-deep: #D3121D; --ai-deep: #1B998B;
+  --core: #290042; --ee: #126ED3; --adv: #D3121D; --ai: #1B998B; --gitar: #6D2A78;
+  --core-deep: #290042; --ee-deep: #126ED3; --adv-deep: #D3121D; --ai-deep: #1B998B; --gitar-deep: #6D2A78;
   color: var(--n8); font: 400 9pt/1.45 "Inter", system-ui, sans-serif; background: #FFFFFF;
 }
 #print-doc .pp-top { display: flex; align-items: center; justify-content: space-between; gap: 6mm; padding-bottom: 3.5mm; border-bottom: .3mm solid var(--line); }
@@ -358,6 +360,8 @@ kbd { font: 500 11px var(--mono); background: #FFFFFF; border: 1px solid #DCE3EC
   <path d="M20.97 5c0 2.1-1.6 3.8-3.5 4" />
   <path d="M22 13h-4" />
   <path d="M17.2 17c2.1.1 3.8 1.9 3.8 4" /></symbol>
+<symbol id="i-check-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 7 17l-5-5" />
+  <path d="m22 10-7.5 7.5L13 16" /></symbol>
 <symbol id="i-chevron-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6" /></symbol>
 <symbol id="i-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></symbol>
 <symbol id="i-clipboard-list" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
@@ -437,6 +441,9 @@ kbd { font: 500 11px var(--mono); background: #FFFFFF; border: 1px solid #DCE3EC
   <rect width="7" height="5" x="14" y="3" rx="1" />
   <rect width="7" height="9" x="14" y="12" rx="1" />
   <rect width="7" height="5" x="3" y="16" rx="1" /></symbol>
+<symbol id="i-message-square-code" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 7.5 8 10l2 2.5" />
+  <path d="m14 7.5 2 2.5-2 2.5" />
+  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></symbol>
 <symbol id="i-network" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="16" y="16" width="6" height="6" rx="1" />
   <rect x="2" y="16" width="6" height="6" rx="1" />
   <rect x="9" y="2" width="6" height="6" rx="1" />
@@ -528,6 +535,9 @@ kbd { font: 500 11px var(--mono); background: #FFFFFF; border: 1px solid #DCE3EC
   <path d="M7 8H3" />
   <path d="M21 16h-4" />
   <path d="M11 3H9" /></symbol>
+<symbol id="i-workflow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="8" x="3" y="3" rx="2" />
+  <path d="M7 11v4a2 2 0 0 0 2 2h4" />
+  <rect width="8" height="8" x="13" y="13" rx="2" /></symbol>
 <symbol id="i-wrench" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" /></symbol>
   </defs>
 </svg>
@@ -556,7 +566,7 @@ kbd { font: 500 11px var(--mono); background: #FFFFFF; border: 1px solid #DCE3EC
 
   <section class="hero">
     <h1>Enterprise Edition <em>at a glance</em></h1>
-    <p>Core analysis sits at the center of the wheel. Around it are what Enterprise Edition adds, the two Advanced Security components and Sonar's AI products. Hover a segment to zoom in, or click it to pin the details.</p>
+    <p>Core analysis sits at the center of the wheel. Around it are what Enterprise Edition adds, the Advanced Security capabilities, Sonar's AI products and Gitar. Hover a segment to zoom in, or click it to pin the details.</p>
   </section>
 
   <main class="stage">
@@ -583,7 +593,7 @@ kbd { font: 500 11px var(--mono); background: #FFFFFF; border: 1px solid #DCE3EC
     </aside>
   </main>
 
-  <p class="foot">Based on SonarQube Server 2026.5 LTA. Developer Edition includes the core analysis ring and AI Code Assurance. Data Center Edition includes everything in Enterprise Edition plus high availability and horizontal scaling. Advanced Security, Sonar Vortex, the Remediation Agent and the Hunter Agent are separate subscriptions for Enterprise and Data Center Edition. On SonarQube Server the agentic products run as containers in your infrastructure and send code only to the LLM endpoint you configure.</p>
+  <p class="foot">Based on SonarQube Server 2026.5 LTA. Developer Edition includes the core analysis ring and AI Code Assurance. Data Center Edition includes everything in Enterprise Edition plus high availability and horizontal scaling. Advanced Security, Sonar Vortex, the Remediation Agent and the Hunter Agent are separate subscriptions for Enterprise and Data Center Edition. On SonarQube Server the agentic products run as containers in your infrastructure and send code only to the LLM endpoint you configure. Gitar is a separate Sonar product, hosted by Sonar as SaaS, that works alongside SonarQube Server.</p>
 </div>
 
 <div id="hud">
@@ -604,7 +614,8 @@ const GROUPS = {
   core: { name: "Core analysis", sub: "All editions", c: "var(--core)", d: "var(--core-deep)" },
   ee:   { name: "Enterprise differentiators", sub: "Enterprise Edition", c: "var(--ee)", d: "var(--ee-deep)" },
   adv:  { name: "Advanced Security", sub: "Add-on", c: "var(--adv)", d: "var(--adv-deep)" },
-  ai:   { name: "AI & agentic", sub: "Included and add-on", c: "var(--ai)", d: "var(--ai-deep)" }
+  ai:   { name: "AI & agentic", sub: "Included and add-on", c: "var(--ai)", d: "var(--ai-deep)" },
+  gitar: { name: "Gitar", sub: "Separate product", c: "var(--gitar)", d: "var(--gitar-deep)" }
 };
 
 const ADDON = "Add-on · Enterprise & Data Center";
@@ -841,7 +852,37 @@ const ITEMS = [
              "Findings can be handed to the Remediation Agent for a proposed fix"],
     value: "Continuous coverage of broken access control, the #1 OWASP risk, between pen tests.",
     chips: [{ label: "DevOps platforms", items: ["github|GitHub", "gitlab|GitLab", "azuredevops|Azure DevOps"] },
-            { label: "Model", items: ["anthropic|Anthropic Claude"] }] }
+            { label: "Model", items: ["anthropic|Anthropic Claude"] }] },
+  // ---------------- Gitar (separate Sonar product; public Gitar product page and the 2026 tour wording)
+  { id: "gitar-review", g: "gitar", short: ["Code", "review"], icon: "message-square-code", de: 1, avail: "Separate product · Sonar-hosted SaaS",
+    title: "Gitar agentic code review",
+    lead: "Reviews every pull request inside the platform you already use, with high-signal findings instead of bot noise.",
+    points: ["Catches business-logic issues, edge cases, omissions, performance issues and testing gaps",
+             "Answers questions in context on the pull request and applies fixes on request",
+             "Plain-language policies, with no scripts or YAML, enforced on every PR",
+             "Findings get more relevant over time through a knowledge base and cross-repo, cross-PR context"],
+    value: "Better reviews on every PR without another tool for developers to learn.",
+    chips: [{ label: "Code review platforms · including various self-hosted instances", items: ["github|GitHub", "gitlab|GitLab", "bitbucket|Bitbucket", "azuredevops|Azure DevOps"] },
+            { label: "Workflow", items: ["jira|Jira", "#Linear", "slack|Slack"] }] },
+  { id: "gitar-ci", g: "gitar", short: ["CI", "repair"], icon: "workflow", de: 1, avail: "Separate product · Sonar-hosted SaaS",
+    title: "CI failure diagnosis & repair",
+    lead: "Diagnoses failing pipelines and fixes them, so developers stop debugging CI by hand.",
+    points: ["Diagnoses CI failures and de-duplicates the noise",
+             "Catches flaky tests",
+             "Fixes build, lint and test errors",
+             "Reads your existing pipeline: every runner, job and gate stays exactly where it is"],
+    value: "Shorter time to merge and fewer interruptions for your best engineers.",
+    chips: [{ label: "CI systems", items: ["github|GitHub Actions", "gitlab|GitLab Pipelines", "jenkins|Jenkins", "#CircleCI", "#Buildkite", "#Bitrise", "#Harness", "#TeamCity"] }] },
+  { id: "gitar-fix", g: "gitar", short: ["Fix &", "verify"], icon: "check-check", de: 1, avail: "Separate product · Sonar-hosted SaaS",
+    title: "Fix and verify until CI passes",
+    lead: "Generates the fix, commits it, runs your pipeline and iterates until CI passes, under your supervision.",
+    points: ["Choose the level of autonomy: human in control, fixes applied on request, or fully autonomous agent PRs that remediate and build themselves",
+             "Works alongside the SonarQube quality gate on the same pull request: deterministic rules plus agentic review",
+             "Analytics dashboards show time to merge, review cycles, CI failure patterns and flake rates",
+             "No source code retained, never used for training, and zero data retention agreements with all LLM providers"],
+    value: "Proof that every change passes your CI before it merges.",
+    chips: [{ label: "Trust", items: ["#SOC 2 Type II", "#ISO 27001", "#GDPR", "#Zero data retention", "anthropic|Bring your own Anthropic key"] },
+            { label: "Hosting", items: ["#Sonar-hosted SaaS", "#Regional instances (beta): EU, Singapore, Australia, Japan"] }] }
 ];
 
 const DEFAULT_LABEL = { java: "Java", csharp: "C#", python: "Python", javascript: "JavaScript", typescript: "TypeScript", go: "Go", kotlin: "Kotlin", cplusplus: "C++", swift: "Swift", php: "PHP", dart: "Dart", scala: "Scala" };
@@ -852,13 +893,14 @@ const TEXT = {
   hubBadge: "+ 2 STAGING LICENSES",
   hubBadgeTitle: "Each Enterprise Edition license includes 1 production instance and 2 staging licenses for non-production instances",
   ovNote: "Every Enterprise Edition license includes one production instance plus two staging licenses for non-production instances, for example to test upgrades, new features and integrations.",
-  rings: { ee: "Enterprise Edition", adv: "Advanced Security", ai: "AI & agentic" },
+  rings: { gitar: "Gitar", ee: "Enterprise Edition", adv: "Advanced Security", ai: "AI & agentic" },
   inCompare: "In Developer Edition", notInCompare: "Not in Developer Edition",
   groupDesc: { core: "Quality, reliability, security, secrets, IaC and quality gates",
                ee: "Governance, reporting, compliance, languages and scale",
                adv: "Software Composition Analysis, SBOM export, Advanced SAST and Security Alerts",
-               ai: "AI CodeFix, AI Code Assurance, MCP Server, CLI, Vortex, Remediation and Hunter Agent" },
-  ovTitle: "One platform, four layers",
+               ai: "AI CodeFix, AI Code Assurance, MCP Server, CLI, Vortex, Remediation and Hunter Agent",
+               gitar: "Agentic code review, CI repair and fix-and-verify on every pull request" },
+  ovTitle: "Four SonarQube layers, plus Gitar",
   ovLead: "Enterprise Edition is built on the same analysis engine as every edition. It adds the governance, reporting, compliance and scale that large organizations need, and it is the platform for Advanced Security and Sonar's agentic AI products.",
   ovTitleCompare: "What Developer Edition leaves out",
   ovLeadCompare: "Developer Edition covers the core analysis ring, AI Code Assurance, the MCP Server and the CLI. Everything shown faded on the wheel needs Enterprise Edition or higher."
@@ -884,13 +926,14 @@ function el(tag, attrs, parent) {
 }
 
 const inner = ITEMS.filter(i => i.g === "core");
-const outer = ["ee", "adv", "ai"].flatMap(g => ITEMS.filter(i => i.g === g));
+const OUTER = ["ee", "adv", "ai", "gitar"].filter(g => GROUPS[g]);
+const outer = OUTER.flatMap(g => ITEMS.filter(i => i.g === g));
 const ORDER = [...inner, ...outer];
 const GAP = 5, PAD = .7;
 
 inner.forEach((it, k) => { const s = 360 / inner.length; Object.assign(it, { a0: k * s + PAD, a1: (k + 1) * s - PAD, r1: R.i1, r2: R.i2 }); });
 {
-  const step = (360 - GAP * 3) / outer.length;
+  const step = (360 - GAP * OUTER.length) / outer.length;
   let a = GAP / 2, prev = null;
   outer.forEach(it => {
     if (prev && prev !== it.g) a += GAP;
@@ -937,6 +980,7 @@ ITEMS.forEach((it, idx) => {
   el("use", { href: `#i-${it.icon}` }, ico);
   lines.forEach((ln, j) => {
     const t = el("text", { x: cx, y: top + isz + 22 + j * 18 }, g);
+    if (outerRing && outer.length > 18) t.style.fontSize = "13.5px";   // crowded outer ring: keep labels inside their segment
     t.textContent = ln;
   });
   it.node = g;
@@ -957,7 +1001,7 @@ function arcLabel(text, a0, a1, color) {
   const tp = el("textPath", { href: "#" + id, startOffset: "50%", "text-anchor": "middle" }, t);
   tp.textContent = text;
 }
-["ee", "adv", "ai"].forEach(g => {
+OUTER.forEach(g => {
   const its = outer.filter(i => i.g === g);
   const label = TEXT.rings[g];
   arcLabel(label, its[0].a0, its[its.length - 1].a1, GROUPS[g].c);
@@ -982,7 +1026,8 @@ const body = document.getElementById("p-body"), panel = document.getElementById(
 const counter = document.getElementById("counter"), pinnedEl = document.getElementById("pinned");
 const MARKS = { vortex: { logo: "sonar-vortex", name: "Sonar Vortex" }, hunter: { logo: "sonarqube-hunter-agent", name: "SonarQube Hunter Agent" },
   remediation: { sub: "remediation agent" }, sca: { sub: "advanced security" }, asast: { sub: "advanced security" },
-  containers: { sub: "advanced security" }, alerts: { sub: "advanced security" } };
+  containers: { sub: "advanced security" }, alerts: { sub: "advanced security" }, sbom: { sub: "advanced security" },
+  "gitar-review": { logo: "gitar", name: "Gitar" }, "gitar-ci": { logo: "gitar", name: "Gitar" }, "gitar-fix": { logo: "gitar", name: "Gitar" } };
 function markHTML(it) {
   const M = MARKS[it.id]; if (!M) return "";
   if (M.logo) return `<span class="wm"><img class="lg" src="${LOGOS[M.logo]}" alt="${M.name}"></span>`;
