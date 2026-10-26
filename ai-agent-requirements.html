@@ -104,8 +104,10 @@ body {
 .leaf p { margin: 0; font-size: 13px; color: var(--n8); line-height: 1.45; }
 .chips { display: flex; flex-wrap: wrap; gap: 6px; }
 .chip { display: inline-flex; align-items: center; gap: 7px; padding: 4px 11px 4px 4px; border-radius: 999px; background: var(--bg); font: 500 12.5px/1.15 var(--body); color: var(--ink); }
-.chip .tile { width: 24px; height: 24px; border-radius: 50%; background: #FFFFFF; display: grid; place-items: center; box-shadow: 0 1px 3px rgba(41, 0, 66, .12); flex: none; }
-.chip .tile img { width: 15px; height: 15px; object-fit: contain; }
+.tile { width: 24px; height: 24px; border-radius: 50%; background: #FFFFFF; display: grid; place-items: center; box-shadow: 0 1px 3px rgba(41, 0, 66, .12); flex: none; }
+.tile img { width: 15px; height: 15px; object-fit: contain; display: block; }
+.ttl .tile { width: 32px; height: 32px; }
+.ttl .tile img { width: 20px; height: 20px; }
 .chip.txt { padding: 7px 11px; font: 500 12px/1.15 var(--mono); color: var(--blue); }
 .chip.model:has(.tile) { padding: 4px 11px 4px 4px; }
 .chip.model { padding: 7px 11px; font: 600 12px/1.15 var(--mono); color: var(--purple); background: #FFFFFF; border: 1.5px solid var(--k); }
