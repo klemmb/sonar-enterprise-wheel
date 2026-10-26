@@ -134,6 +134,8 @@ body::after {
 .ov-note { margin: 0; border-left: 3px solid var(--ee); padding: 6px 0 6px 14px; color: var(--fg); font-size: 14.5px; line-height: 1.5; }
 .xlink { color: var(--c); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; }
 .xlink:hover { color: var(--fg); }
+.req-link { align-self: flex-start; font: 600 12.5px var(--mono); letter-spacing: .06em; color: var(--c); text-decoration: none; border: 1px solid var(--c); border-radius: 999px; padding: 8px 14px; transition: background .2s, color .2s; }
+.req-link:hover { background: var(--c); color: var(--bg); }
 .hit { fill: transparent; cursor: pointer; outline: none; }
 .hit:focus-visible { stroke: var(--fg); stroke-width: 3; stroke-dasharray: 6 5; }
 #hub-hit { cursor: pointer; fill: transparent; }
@@ -275,6 +277,7 @@ kbd { font: 700 11px var(--mono); padding: 2px 6px; border-radius: 5px; border: 
 #print-doc .hub-badge text { fill: #FFFFFF; }
 #print-doc .pp-note { margin: 0 0 5mm; padding: 2.5mm 3.5mm; border-left: 1mm solid #126ED3; background: var(--bg); border-radius: 2mm; font-size: 9pt; color: var(--n8); }
 #print-doc .xlink { color: inherit; font-weight: 600; text-decoration: none; }
+#print-doc .req-link { display: none; }
 #print-doc .pp-layers { display: grid; gap: 2.6mm; }
 #print-doc .pp-layer { display: grid; grid-template-columns: 12mm 1fr auto; gap: 3mm; align-items: center; padding: 2.6mm 3.5mm; border: .3mm solid var(--line); border-left: 1.2mm solid var(--c); border-radius: 2.5mm; }
 #print-doc .pp-layer b { font: 500 20pt/1 "Lora", serif; color: var(--c); }
@@ -1024,6 +1027,14 @@ function linkify(s) {
     return target ? `<a class="xlink" href="#" data-go="${id}" style="--c:${target.color}">${label} →</a>` : label;
   });
 }
+// agent segments link to their branch on the AI agent requirements page, filtered to this product
+const REQ = { hunter: "hunter", remediation: "remediation", codefix: "codefix", "gitar-review": "gitar", "gitar-ci": "gitar", "gitar-fix": "gitar", vortex: "no-llm", mcp: "no-llm" };
+function reqLink(it) {
+  const anchor = REQ[it.id]; if (!anchor) return "";
+  const env = TEXT.hubSmall.includes("CLOUD") ? "cloud" : "server";
+  const label = anchor === "no-llm" ? "Why it needs no LLM of its own →" : "LLM models &amp; providers →";
+  return `<a class="req-link" href="ai-agent-requirements.html#${anchor}-${env}">${label}</a>`;
+}
 function renderItem(it) {
   const G = GROUPS[it.g];
   const devMode = document.body.classList.contains("dev");
@@ -1045,6 +1056,7 @@ function renderItem(it) {
     ${note}
     <ul class="points">${it.points.map(p => `<li>${linkify(esc(p))}</li>`).join("")}</ul>
     <div class="value"><span>Business value</span><p>${esc(it.value)}</p></div>
+    ${reqLink(it)}
     ${chips}`;
 }
 

@@ -110,6 +110,9 @@ body {
 #map.hot .branch.agent-b:not(.is-hot) .node { opacity: .3; }
 #map.hot #links path:not(.is-hot) { stroke-opacity: .12; }
 #map.hot #links path.is-hot { stroke-opacity: 1; stroke-width: 2.5; }
+.flash > .node.agent, .note.flash { animation: flash 2.4s var(--ease) 1; }
+@keyframes flash { 0%, 60% { box-shadow: 0 0 0 6px color-mix(in srgb, var(--c, var(--blue)) 35%, transparent); border-color: var(--c, var(--blue)); } 100% { box-shadow: 0 14px 34px rgba(41, 0, 66, .08); } }
+.agent-b, .note { scroll-margin: 90px; }
 #map[data-filter="cloud"] .env-b[data-env="server"], #map[data-filter="server"] .env-b[data-env="cloud"] { display: none; }
 
 .notes { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
@@ -175,7 +178,7 @@ body {
     <div class="note"><span class="eyebrow">SonarQube Server</span><b>Providers are registered once per instance</b><p>An instance administrator adds providers under Administration › Configuration › AI capabilities › LLM providers. Each agent then picks its own provider and model on its own page.</p></div>
     <div class="note"><span class="eyebrow">SonarQube Server</span><b>Network access to your models</b><p>SonarQube Server and the agent hosts both need outbound access to your provider. When an agent runs, code and issue details go to that provider, and its terms apply.</p></div>
     <div class="note"><span class="eyebrow">Gitar</span><b>Bring your own model</b><p>Must be enabled for your organization and is set up by an organization admin. One provider serves traffic at a time, and Gitar still picks the model for each task.</p></div>
-    <div class="note"><span class="eyebrow">No LLM of their own</span><b>Sonar Vortex and the MCP Server</b><p>Both work inside your developers' coding agent, which brings its own model. Vortex verification uses Sonar's analysis engine, not an LLM.</p></div>
+    <div class="note" id="no-llm"><span class="eyebrow">No LLM of their own</span><b>Sonar Vortex and the MCP Server</b><p>Both work inside your developers' coding agent, which brings its own model. Vortex verification uses Sonar's analysis engine, not an LLM.</p></div>
   </div>
 
   <p class="foot">Sources: SonarQube Server 2026.5 documentation (LLM providers, Hunter Agent, Remediation Agent, Enable AI CodeFix), SonarQube Cloud documentation (Administer the Remediation Agent, Enable AI CodeFix, Hunter Agent) and the Gitar documentation (Bring Your Own Model). Model versions change over time; check the documentation for the current list.</p>
@@ -256,7 +259,7 @@ function envHTML(e) {
   </div>`;
 }
 function agentHTML(a) {
-  return `<div class="branch agent-b" data-agent="${a.id}" style="--c:${a.color}">
+  return `<div class="branch agent-b" id="${a.id}" data-agent="${a.id}" style="--c:${a.color}">
     <button type="button" class="node agent" aria-expanded="true" style="--i:${n++}">
       ${wordmark(a)}
       <span class="meta"><span>${esc(a.envs.some(e => e.env === "gitar") ? "Sonar-hosted SaaS" : "Cloud · Server")}</span><span class="chev">▾</span></span>
@@ -342,6 +345,31 @@ document.querySelectorAll(".seg-ctl button").forEach(b => b.addEventListener("cl
   map.dataset.filter = b.dataset.filter;
   relink();
 }));
+/* ---------------- deep links: #hunter, #remediation-server, #gitar, #no-llm-cloud … ---------------- */
+function setFilter(f) {
+  document.querySelectorAll(".seg-ctl button").forEach(x => x.setAttribute("aria-pressed", x.dataset.filter === f ? "true" : "false"));
+  map.dataset.filter = f;
+}
+function openFromHash() {
+  const m = (location.hash || "").slice(1).match(/^(hunter|remediation|codefix|gitar|no-llm)(?:-(cloud|server))?$/);
+  if (!m) return;
+  if (m[2]) setFilter(m[2]);
+  const el = document.getElementById(m[1]);
+  if (!el) return;
+  if (el.classList.contains("agent-b")) {
+    el.classList.remove("collapsed");
+    el.querySelector(":scope > .agent").setAttribute("aria-expanded", "true");
+    syncToggleAll();
+  }
+  relink();
+  requestAnimationFrame(() => {
+    el.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "center", inline: "nearest" });
+    el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash");
+    if (el.classList.contains("agent-b")) { setHot(m[1]); setTimeout(() => setHot(null), 2400); }
+  });
+}
+window.addEventListener("hashchange", openFromHash);
+openFromHash();
 relink();
 </script>
 </body>
