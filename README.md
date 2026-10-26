@@ -11,6 +11,7 @@ Live site: https://klemmb.github.io/sonar-enterprise-wheel/
 | `enterprise-wheel-cloud-light.html` | SonarQube Cloud | Light |
 | `enterprise-wheel-server.html` | SonarQube Server | Dark |
 | `enterprise-wheel-cloud.html` | SonarQube Cloud | Dark |
+| `ai-agent-requirements.html` | Cloud, Server & Gitar | LLM models and providers per AI agent |
 
 Each page is self-contained (icons, logos and background music are embedded). Fonts load from Google Fonts.
 
