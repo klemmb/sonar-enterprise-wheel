@@ -131,6 +131,8 @@ body::after {
 .hub-badge text { font: 700 11.5px var(--mono); letter-spacing: .08em; fill: #FFFFFF; text-anchor: middle; }
 .hub-t1.tight { font-size: 34px; }
 .ov-note { margin: 0; border-left: 3px solid var(--ee); padding: 6px 0 6px 14px; color: var(--fg); font-size: 14.5px; line-height: 1.5; }
+.xlink { color: var(--c); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; }
+.xlink:hover { color: var(--fg); }
 .hit { fill: transparent; cursor: pointer; outline: none; }
 .hit:focus-visible { stroke: var(--fg); stroke-width: 3; stroke-dasharray: 6 5; }
 #hub-hit { cursor: pointer; fill: transparent; }
@@ -271,6 +273,7 @@ kbd { font: 700 11px var(--mono); padding: 2px 6px; border-radius: 5px; border: 
 #print-doc .hub-badge rect { fill: #126ED3; }
 #print-doc .hub-badge text { fill: #FFFFFF; }
 #print-doc .pp-note { margin: 0 0 5mm; padding: 2.5mm 3.5mm; border-left: 1mm solid #126ED3; background: var(--bg); border-radius: 2mm; font-size: 9pt; color: var(--n8); }
+#print-doc .xlink { color: inherit; font-weight: 600; text-decoration: none; }
 #print-doc .pp-layers { display: grid; gap: 2.6mm; }
 #print-doc .pp-layer { display: grid; grid-template-columns: 12mm 1fr auto; gap: 3mm; align-items: center; padding: 2.6mm 3.5mm; border: .3mm solid var(--line); border-left: 1.2mm solid var(--c); border-radius: 2.5mm; }
 #print-doc .pp-layer b { font: 500 20pt/1 "Lora", serif; color: var(--c); }
@@ -664,7 +667,7 @@ const ITEMS = [
     lead: "Turns the analysis that already runs in your pipeline into audit-ready compliance evidence.",
     points: ["MISRA C/C++ compliance report, with expanded MISRA C:2012 coverage alongside MISRA C++:2023",
              "WCAG 2.1 AA and 2.2 AA accessibility reports at project, application and portfolio level",
-             "EU Cyber Resilience Act (CRA) compliance report",
+             "EU Cyber Resilience Act (CRA) compliance report. For the dependency and SBOM side of CRA, see [[sca|SCA in Advanced Security]]",
              "Audit logs record administrative activity"],
     value: "Continuous compliance for automotive, medical, financial and public-sector software.",
     chips: [{ label: "Frameworks", items: ["#MISRA C:2012", "#MISRA C++:2023", "#WCAG 2.2 AA", "#EU CRA"] }] },
@@ -970,6 +973,13 @@ function chipHTML(spec, i) {
   return `<span class="chip" style="--i:${i}"><span class="tile"><img alt="" src="${src}"></span>${esc(name)}</span>`;
 }
 
+// [[id|label]] inside a point becomes a link that jumps to another segment of the wheel
+function linkify(s) {
+  return s.replace(/\[\[([a-z0-9-]+)\|([^\]]+)\]\]/g, (m, id, label) => {
+    const target = ITEMS.find(i => i.id === id);
+    return target ? `<a class="xlink" href="#" data-go="${id}" style="--c:${target.color}">${label} →</a>` : label;
+  });
+}
 function renderItem(it) {
   const G = GROUPS[it.g];
   const devMode = document.body.classList.contains("dev");
@@ -989,7 +999,7 @@ function renderItem(it) {
     <h2>${esc(it.title)}</h2>
     <p class="lead">${esc(it.lead)}</p>
     ${note}
-    <ul class="points">${it.points.map(p => `<li>${esc(p)}</li>`).join("")}</ul>
+    <ul class="points">${it.points.map(p => `<li>${linkify(esc(p))}</li>`).join("")}</ul>
     <div class="value"><span>Business value</span><p>${esc(it.value)}</p></div>
     ${chips}`;
 }
@@ -1009,6 +1019,12 @@ function renderOverview() {
     <div class="stats">${rows}</div>
     <p class="hint">Hover a segment to zoom in. Click to pin it. Use <kbd>←</kbd> <kbd>→</kbd> to step through and <kbd>Esc</kbd> to return here. <kbd>P</kbd> plays the tour and <kbd>M</kbd> toggles music.</p>`;
 }
+
+body.addEventListener("click", e => {
+  const a = e.target.closest && e.target.closest("[data-go]");
+  if (!a) return;
+  e.preventDefault(); stopTour(); pin(a.dataset.go);
+});
 
 /* ---------------- state ---------------- */
 const canHover = matchMedia("(hover: hover)").matches;
