@@ -219,10 +219,12 @@ const TREE = [
     { env: "gitar", label: "Default", sub: "Sonar-hosted SaaS", leaves: [
       { kind: "gitar", tag: "Provided by Gitar", title: "Gitar's own model access", note: "Gitar chooses the model for each task, with zero data retention agreements with all LLM providers." } ] },
     { env: "gitar", label: "Bring your own model", sub: "Set up by an organization admin", leaves: [
-      { kind: "byo", tag: "Anthropic", title: "Anthropic", supply: "<strong>You supply:</strong> an API key", chips: ["anthropic|Opus, Sonnet & Haiku access"] },
+      { kind: "models", tag: "Models · always Anthropic", title: "Claude Opus, Sonnet and Haiku", models: ["Claude Opus", "Claude Sonnet", "Claude Haiku"],
+        note: "Whichever provider you choose, Gitar runs Anthropic's Opus, Sonnet and Haiku models and picks the model for each task. Your account needs access to all three." },
+      { kind: "byo", tag: "Anthropic", title: "Anthropic", supply: "<strong>You supply:</strong> an API key with access to Opus, Sonnet and Haiku" },
       { kind: "byo", tag: "AWS Bedrock", title: "AWS Bedrock", supply: "<strong>You supply:</strong> a residency geography and an IAM role",
-        chips: ["#United States", "#European Union", "#Australia", "#Japan"], note: "Optional Bedrock guardrail, for example to apply your own PII policy." },
-      { kind: "byo", tag: "Gateway", title: "LiteLLM", supply: "<strong>You supply:</strong> your gateway URL and an API key" },
+        chips: ["#United States", "#European Union", "#Australia", "#Japan"], note: "Enable the three Anthropic models in your AWS account. Optional Bedrock guardrail, for example to apply your own PII policy." },
+      { kind: "byo", tag: "Gateway", title: "LiteLLM", supply: "<strong>You supply:</strong> your gateway URL and an API key", note: "Gateways route Gitar's calls to the same Anthropic models." },
       { kind: "byo", tag: "Gateway", title: "Portkey", supply: "<strong>You supply:</strong> a provider slug and an API key" },
       { kind: "byo", tag: "Gateway", title: "OpenRouter", supply: "<strong>You supply:</strong> an API key" } ] } ] }
 ];
