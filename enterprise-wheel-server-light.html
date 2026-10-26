@@ -351,6 +351,12 @@ kbd { font: 500 11px var(--mono); background: #FFFFFF; border: 1px solid #DCE3EC
   <path d="M17.2 17c2.1.1 3.8 1.9 3.8 4" /></symbol>
 <symbol id="i-chevron-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6" /></symbol>
 <symbol id="i-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></symbol>
+<symbol id="i-clipboard-list" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+  <path d="M12 11h4" />
+  <path d="M12 16h4" />
+  <path d="M8 11h.01" />
+  <path d="M8 16h.01" /></symbol>
 <symbol id="i-cloud-cog" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="17" r="3" />
   <path d="M4.2 15.1A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.2" />
   <path d="m15.7 18.4-.9-.3" />
@@ -725,12 +731,21 @@ const ITEMS = [
     points: ["Vulnerabilities in direct and transitive dependencies, prioritized with CVSS, EPSS and CISA KEV",
              "Reachability analysis shows whether your code actually reaches the vulnerable part of a dependency, so teams fix what matters first",
              "Malicious package detection using OSV and OpenSSF data",
-             "License profiles and policies block non-compliant licenses",
-             "SBOM export for your release evidence"],
+             "License profiles and policies block non-compliant licenses"],
     value: "Supply-chain security, with evidence for CRA, SOC 2 and ISO 27001.",
     chips: [{ label: "Supported languages", items: ["java|Java", "javascript|JavaScript", "kotlin|Kotlin", "php|PHP", "python|Python", "scala|Scala", "go|Go", "csharp|C#", "visualbasic|VB.NET", "ruby|Ruby", "rust|Rust", "cplusplus|C/C++ · beta"] },
             { label: "Reachability analysis", items: ["java|Java", "kotlin|Kotlin", "python|Python", "csharp|C#", "visualbasic|VB.NET"] },
             { label: "Supported package managers", items: ["maven|Maven", "gradle|Gradle", "npm|npm", "yarn|Yarn", "pnpm|pnpm", "bun|Bun", "pypi|pip", "poetry|Poetry", "uv|uv", "#Pipenv", "go|Go modules", "nuget|NuGet", "composer|Composer", "rubygems|RubyGems", "rust|Cargo", "#Conan · beta", "#vcpkg · beta", "#SBOM import (CycloneDX, SPDX)"] }] },
+  { id: "sbom", g: "adv", short: ["SBOM", "export"], icon: "clipboard-list", de: 0, avail: "Advanced Security · Enterprise & Data Center",
+    title: "SBOM export",
+    lead: "Produces a software bill of materials on demand, ready to hand to customers, auditors or regulators.",
+    points: ["Export from the Dependencies page of projects, applications and portfolios",
+             "CycloneDX and SPDX, each in XML or JSON",
+             "Generated on request in the UI or through the API, for example from your release pipeline",
+             "SonarQube keeps no SBOM history, so export and archive one for each release"],
+    value: "Release evidence for the EU Cyber Resilience Act, customer requests and supplier audits, from analysis you already run.",
+    chips: [{ label: "Formats", items: ["#CycloneDX · XML & JSON", "#SPDX · XML & JSON"] },
+            { label: "Export from", items: ["#Projects", "#Applications", "#Portfolios", "#Web API"] }] },
   { id: "asast", g: "adv", short: ["Advanced", "SAST"], icon: "route", de: 0, avail: ADDON,
     title: "Advanced SAST",
     lead: "Follows tainted data across the boundary into third-party libraries to find vulnerabilities other tools miss.",
@@ -829,7 +844,7 @@ const TEXT = {
   inCompare: "In Developer Edition", notInCompare: "Not in Developer Edition",
   groupDesc: { core: "Quality, reliability, security, secrets, IaC and quality gates",
                ee: "Governance, reporting, compliance, languages and scale",
-               adv: "Software Composition Analysis, Advanced SAST and Security Alerts",
+               adv: "Software Composition Analysis, SBOM export, Advanced SAST and Security Alerts",
                ai: "AI CodeFix, AI Code Assurance, MCP Server, CLI, Vortex, Remediation and Hunter Agent" },
   ovTitle: "One platform, four layers",
   ovLead: "Enterprise Edition is built on the same analysis engine as every edition. It adds the governance, reporting, compliance and scale that large organizations need, and it is the platform for Advanced Security and Sonar's agentic AI products.",
