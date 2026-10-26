@@ -115,6 +115,9 @@ body {
 .hub-disc { fill: #FFFFFF; stroke: var(--line); stroke-width: 2; filter: drop-shadow(0 16px 30px rgba(41, 0, 66, .12)); }
 .hub-t1 { font: 500 30px var(--display); fill: var(--ink); text-anchor: middle; }
 .ring-label { font: 600 13px var(--mono); letter-spacing: .22em; text-transform: uppercase; }
+.hub-badge rect { fill: var(--blue); }
+.hub-badge text { font: 600 11.5px var(--mono); letter-spacing: .08em; fill: #FFFFFF; text-anchor: middle; }
+.ov-note { margin: 0; background: var(--bg); border-left: 4px solid var(--blue); border-radius: 12px; padding: 11px 15px; color: var(--n8); font-size: 14.5px; line-height: 1.5; }
 .hit { fill: transparent; cursor: pointer; outline: none; }
 .hit:focus-visible { stroke: var(--ink); stroke-width: 3; stroke-dasharray: 6 5; }
 #hub-hit { cursor: pointer; fill: transparent; }
@@ -281,6 +284,9 @@ kbd { font: 500 11px var(--mono); background: #FFFFFF; border: 1px solid #DCE3EC
 #print-doc h1 { margin: 0 0 3mm; font: 500 26pt/1.05 "Lora", Georgia, serif; color: var(--ink); }
 #print-doc h1 em { font-style: normal; color: var(--blue); }
 #print-doc .pp-hero { margin: 0 0 6mm; font-size: 10pt; color: var(--n8); }
+#print-doc .hub-badge rect { fill: #126ED3; }
+#print-doc .hub-badge text { fill: #FFFFFF; }
+#print-doc .pp-note { margin: 0 0 5mm; padding: 2.5mm 3.5mm; border-left: 1mm solid #126ED3; background: var(--bg); border-radius: 2mm; font-size: 9pt; color: var(--n8); }
 #print-doc .pp-layers { display: grid; gap: 2.6mm; }
 #print-doc .pp-layer { display: grid; grid-template-columns: 12mm 1fr auto; gap: 3mm; align-items: center; padding: 2.6mm 3.5mm; border: .3mm solid var(--line); border-left: 1.2mm solid var(--c); border-radius: 2.5mm; }
 #print-doc .pp-layer b { font: 500 20pt/1 "Lora", serif; color: var(--c); }
@@ -840,6 +846,9 @@ const DEFAULT_LABEL = { java: "Java", csharp: "C#", python: "Python", javascript
 
 const TEXT = {
   hubSmall: "SONARQUBE SERVER", hub: ["Enterprise", "Edition"], hubCompare: ["Developer", "Edition"],
+  hubBadge: "+ 2 STAGING LICENSES",
+  hubBadgeTitle: "Each Enterprise Edition license includes 1 production instance and 2 staging licenses for non-production instances",
+  ovNote: "Every Enterprise Edition license includes one production instance plus two staging licenses for non-production instances, for example to test upgrades, new features and integrations.",
   rings: { ee: "Enterprise Edition", adv: "Advanced Security", ai: "AI & agentic" },
   inCompare: "In Developer Edition", notInCompare: "Not in Developer Edition",
   groupDesc: { core: "Quality, reliability, security, secrets, IaC and quality gates",
@@ -890,13 +899,23 @@ inner.forEach((it, k) => { const s = 360 / inner.length; Object.assign(it, { a0:
 const viz = document.getElementById("viz"), hits = document.getElementById("hits"), svg = document.getElementById("wheel");
 
 // hub
+// optional license badge under the hub label (SonarQube Server: staging licenses)
+function hubBadge(parent, y) {
+  if (!TEXT.hubBadge) return null;
+  const g = el("g", { class: "hub-badge" }, parent);
+  el("rect", { x: CX - 82, y, width: 164, height: 24, rx: 12 }, g);
+  const tx = el("text", { x: CX, y: y + 16 }, g); tx.textContent = TEXT.hubBadge;
+  return g;
+}
+const HB = !!TEXT.hubBadge;
 el("circle", { cx: CX, cy: CY, r: (R.i2 + R.o1) / 2, class: "guide" }, viz);
 const hub = el("g", { class: "hub" }, viz);
 el("circle", { cx: CX, cy: CY, r: R.hub + 7, class: "guide" }, hub);
 el("circle", { cx: CX, cy: CY, r: R.hub - 4, class: "hub-disc" }, hub);
-el("image", { href: HUB_LOGO, x: CX - 88, y: CY - 62, width: 176, height: 40 }, hub);
-const hubT1 = el("text", { x: CX, y: CY + 22, class: "hub-t1" }, hub); hubT1.textContent = TEXT.hub[0];
-const hubT2 = el("text", { x: CX, y: CY + 56, class: "hub-t1" }, hub); hubT2.textContent = TEXT.hub[1];
+el("image", { href: HUB_LOGO, x: CX - 88, y: CY - (HB ? 74 : 62), width: 176, height: 40 }, hub);
+const hubT1 = el("text", { x: CX, y: CY + (HB ? -2 : 22), class: "hub-t1" }, hub); hubT1.textContent = TEXT.hub[0];
+const hubT2 = el("text", { x: CX, y: CY + (HB ? 30 : 56), class: "hub-t1" }, hub); hubT2.textContent = TEXT.hub[1];
+const hubB = hubBadge(hub, CY + 44);
 
 ITEMS.forEach((it, idx) => {
   const G = GROUPS[it.g];
@@ -943,6 +962,7 @@ function arcLabel(text, a0, a1, color) {
 
 // hub hit area last so it sits above the hub visuals
 const hubHit = el("circle", { cx: CX, cy: CY, r: R.hub, id: "hub-hit", tabindex: "0", role: "button", "aria-label": "Show overview" }, hits);
+if (TEXT.hubBadgeTitle) { const ht = el("title", {}, hubHit); ht.textContent = TEXT.hubBadgeTitle; }
 
 /* ---------------- legend ---------------- */
 const legend = document.getElementById("legend");
@@ -1013,6 +1033,7 @@ function renderOverview() {
     <div class="p-kick"><span class="eyebrow" style="color:var(--label)">Overview</span></div>
     <h2>${esc(devMode ? TEXT.ovTitleCompare : TEXT.ovTitle)}</h2>
     <p class="lead">${esc(devMode ? TEXT.ovLeadCompare : TEXT.ovLead)}</p>
+    ${TEXT.ovNote && !devMode ? `<p class="ov-note">${esc(TEXT.ovNote)}</p>` : ""}
     <div class="stats">${rows}</div>
     <p class="hint">Hover a segment to zoom in. Click to pin it. Use <kbd>←</kbd> <kbd>→</kbd> to step through and <kbd>Esc</kbd> to return here. <kbd>P</kbd> plays the tour and <kbd>M</kbd> toggles music.</p>`;
 }
@@ -1202,7 +1223,7 @@ function buildPrintDoc() {
       ${head}
       <div class="pp-cover-grid">
         <div class="pp-wheel">${wheelHTML}</div>
-        <div><h1>${h1}</h1><p class="pp-hero">${hero}</p><div class="pp-layers">${layers}</div></div>
+        <div><h1>${h1}</h1><p class="pp-hero">${hero}</p>${TEXT.ovNote ? `<p class="pp-note">${esc(TEXT.ovNote)}</p>` : ""}<div class="pp-layers">${layers}</div></div>
       </div>
       <p class="pp-foot">${foot}</p>
     </section>${groups}`;
@@ -1226,6 +1247,7 @@ document.getElementById("de-toggle").addEventListener("change", e => {
   svg.classList.toggle("dev", on);
   hubT1.textContent = on ? TEXT.hubCompare[0] : TEXT.hub[0];
   hubT2.textContent = on ? TEXT.hubCompare[1] : TEXT.hub[1];
+  if (hubB) hubB.style.display = on ? "none" : "";
   if (state.cur) show(state.cur, { force: true, zoom: !!state.pinned || svg.classList.contains("focus") });
   else paint(renderOverview(), "var(--blue)", "var(--blue)");
 });
