@@ -17,8 +17,8 @@ Each page is self-contained (icons, logos and background music are embedded). Fo
 
 ## Controls
 
-- Hover a segment to zoom in; click to pin it; click the center for the overview.
-- `←` / `→` step through the capabilities, `Esc` returns to the overview.
+- Hover a segment to highlight it; click it to show its details and click it again to hide them; click the center for the overview.
+- `←` / `→` step through the capabilities, `Esc` closes the details.
 - `P` plays or pauses the guided tour (seconds per step are configurable), `M` toggles the background music.
 - The compare switch fades what Developer Edition (Server) or the Team plan (Cloud) does not include.
 - **Export PDF** opens the print dialog; choose *Save as PDF* for an A4 landscape handout.
