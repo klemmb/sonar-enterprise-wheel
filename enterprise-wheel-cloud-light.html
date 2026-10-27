@@ -1053,12 +1053,13 @@ function linkify(s) {
   });
 }
 // agent segments link to their branch on the AI agent requirements page, filtered to this product
+const PAGE = (String(location.pathname || "").split("/").pop() || "").replace(/[^a-z0-9.-]/gi, "");
 const REQ = { hunter: "hunter", remediation: "remediation", codefix: "codefix", "gitar-review": "gitar", "gitar-ci": "gitar", "gitar-fix": "gitar", vortex: "no-llm", mcp: "no-llm" };
 function reqLink(it) {
   const anchor = REQ[it.id]; if (!anchor) return "";
   const env = TEXT.hubSmall.includes("CLOUD") ? "cloud" : "server";
   const label = anchor === "no-llm" ? "Why it needs no LLM of its own →" : "LLM models &amp; providers →";
-  return `<a class="req-link" href="ai-agent-requirements.html#${anchor}-${env}">${label}</a>`;
+  return `<a class="req-link" href="ai-agent-requirements.html?from=${encodeURIComponent(PAGE)}&amp;item=${it.id}#${anchor}-${env}">${label}</a>`;
 }
 function renderItem(it) {
   const G = GROUPS[it.g];
@@ -1208,6 +1209,18 @@ document.addEventListener("keydown", e => {
   if (e.key === "ArrowRight" || e.key === "ArrowDown") { e.preventDefault(); stopTour(); step(1); }
   else if (e.key === "ArrowLeft" || e.key === "ArrowUp") { e.preventDefault(); stopTour(); step(-1); }
   else if (e.key === "Escape") { stopTour(); overview(); }
+});
+
+// a link such as enterprise-wheel-server-light.html#hunter opens that segment (used by "Back to SonarQube")
+function openItemFromHash() {
+  const id = (location.hash || "").slice(1);
+  if (ITEMS.some(i => i.id === id)) show(id);
+}
+window.addEventListener("load", openItemFromHash);
+window.addEventListener("hashchange", openItemFromHash);
+document.querySelectorAll('a[href="ai-agent-requirements.html"]').forEach(a => {
+  const env = TEXT.hubSmall.includes("CLOUD") ? "cloud" : "server";
+  a.href = `ai-agent-requirements.html?from=${encodeURIComponent(PAGE)}#hunter-${env}`;
 });
 
 /* ---------------- tour ---------------- */

@@ -47,6 +47,8 @@ body {
 .seg-ctl button:hover, .btn:hover { color: var(--blue); background: #FFFFFF; }
 .seg-ctl button[aria-pressed="true"] { background: var(--blue); color: #FFFFFF; }
 .btn.pill { padding: 9px 14px; }
+.btn.back { color: #FFFFFF; background: var(--blue); border-color: var(--blue); }
+.btn.back:hover { color: #FFFFFF; background: var(--blue-hover); }
 
 .hero h1 { margin: 6px 0 8px; font: 500 clamp(30px, 4.4vw, 54px)/1.05 var(--display); color: var(--ink); letter-spacing: -.015em; text-wrap: balance; }
 .hero h1 em { font-style: normal; color: var(--blue); }
@@ -160,6 +162,7 @@ body {
         <button type="button" data-filter="server" aria-pressed="false">SonarQube Server</button>
       </div>
       <button class="btn pill" type="button" id="toggle-all">Collapse all</button>
+      <a class="btn pill back" id="back" href="enterprise-wheel-server-light.html">← Back to SonarQube</a>
       <a class="btn pill" href="index.html">All wheels</a>
     </div>
   </header>
@@ -362,6 +365,23 @@ function setFilter(f) {
   map.dataset.filter = f;
 }
 document.querySelectorAll(".seg-ctl button").forEach(b => b.addEventListener("click", () => { setFilter(b.dataset.filter); relink(); }));
+
+/* ---------------- back to the wheel the visitor came from ---------------- */
+const WHEELS = { "enterprise-wheel-server-light.html": "SonarQube Server", "enterprise-wheel-server.html": "SonarQube Server",
+                 "enterprise-wheel-cloud-light.html": "SonarQube Cloud", "enterprise-wheel-cloud.html": "SonarQube Cloud" };
+(function setBack() {
+  const back = document.getElementById("back");
+  const q = new URLSearchParams(location.search);
+  const from = q.get("from"), item = (q.get("item") || "").replace(/[^a-z0-9-]/gi, "");
+  if (from && WHEELS[from]) {
+    back.href = from + (item ? "#" + item : "");
+    back.textContent = "← Back to " + WHEELS[from];
+    return;
+  }
+  const env = /-cloud$/.test((location.hash || "").slice(1)) ? "cloud" : "server";
+  back.href = `enterprise-wheel-${env}-light.html`;
+  back.textContent = "← Back to " + (env === "cloud" ? "SonarQube Cloud" : "SonarQube Server");
+})();
 
 /* ---------------- deep links: #hunter, #remediation-server, #gitar, #no-llm-cloud … ---------------- */
 function openFromHash() {
