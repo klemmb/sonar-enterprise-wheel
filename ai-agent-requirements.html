@@ -205,8 +205,8 @@ const SERVER_PROVIDERS = ["anthropic|Anthropic", "openai|OpenAI", "azureai|Azure
 const TREE = [
   { type: "agent", id: "hunter", name: "Hunter Agent", logo: "sonarqube-hunter-agent", color: "var(--ai)", meta: "Cloud · Server", kids: [
     { type: "env", env: "cloud", label: "SonarQube Cloud", logo: "sonarqube-cloud", sub: "Enterprise plan", kids: [
-      { kind: "sonar", tag: "Provided by Sonar", title: "Hosted by Sonar", models: ["claude|Claude Opus & Sonnet"],
-        note: "Run by the Sonar Foundation Agent on Sonar's infrastructure. No LLM key or tokens to manage." } ] },
+      { kind: "sonar", tag: "Provided by Sonar", title: "Hosted by Sonar", models: ["openai|GPT-6.1 Sol (OpenAI Daybreak)"],
+        note: "Runs on the Sonar Foundation Agent on Sonar's infrastructure, with OpenAI's GPT-6.1 Sol through the Daybreak program for defensive security. No LLM key or tokens to manage." } ] },
     { type: "env", env: "server", label: "SonarQube Server", logo: "sonarqube-server", sub: "2026.5, Enterprise & Data Center", kids: [
       { kind: "models", tag: "Models · both required", title: "Opus as primary, Sonnet as secondary", models: ["claude|Claude Opus 4.8", "claude|Claude Sonnet 4.6"] },
       { kind: "byo", tag: "Your provider", title: "A registered provider that serves both models", chips: ["anthropic|Anthropic", "bedrock|AWS Bedrock", "azureai|Azure AI Foundry", "gateway|Custom gateway or proxy"],
