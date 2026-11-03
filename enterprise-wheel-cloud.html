@@ -144,8 +144,13 @@ body::after {
 .seg.hl:not(.on) path.shape { fill: var(--deep); stroke-opacity: 1; }
 .seg.hl:not(.on) .ico { color: #FFFFFF; }
 .seg.hl:not(.on) text { fill: #FFFFFF; }
+.seg .seg-badge { display: none; }   /* plan badges show only in the plan comparison view */
+.dev .seg .seg-badge { display: inline; }
 .seg .seg-badge rect { fill: var(--c); transition: fill .3s; }
-.seg .seg-badge text { font: 700 9.5px var(--mono); letter-spacing: .12em; fill: #FFFFFF; text-anchor: middle; }
+.seg .seg-badge text { font: 700 8.5px var(--mono); letter-spacing: .1em; fill: #FFFFFF; text-anchor: middle; }
+.ico-wrap { transition: transform .3s ease; }
+.dev .seg .ico-wrap { transform: translateX(25px); }   /* make room for the plan pill on its left */
+.title-badge { display: inline-block; vertical-align: middle; margin: 0 10px 4px 0; padding: 5px 10px; border-radius: 999px; background: var(--c); color: #FFFFFF; font: 700 11px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; }
 .seg.on .seg-badge rect, .seg.cur .seg-badge rect, .seg.hl .seg-badge rect { fill: #FFFFFF; }
 .seg.on .seg-badge text, .seg.cur .seg-badge text, .seg.hl .seg-badge text { fill: var(--deep); }
 @media (max-width: 620px) { .seg .seg-badge { display: none; } }   /* labels are hidden on phones too */
@@ -980,20 +985,21 @@ ITEMS.forEach((it, idx) => {
   const outerRing = it.r1 === R.o1;
   const isz = outerRing ? 38 : 40;
   const lines = it.short;
-  const block = isz + 8 + lines.length * 18 + (it.badge ? 24 : 0);
+  const block = isz + 8 + lines.length * 18;
   const top = cy - block / 2;
-  const ico = el("svg", { x: cx - isz / 2, y: top, width: isz, height: isz, class: "ico", viewBox: "0 0 24 24" }, g);
+  const icoWrap = it.badge ? el("g", { class: "ico-wrap" }, g) : g;
+  const ico = el("svg", { x: cx - isz / 2, y: top, width: isz, height: isz, class: "ico", viewBox: "0 0 24 24" }, icoWrap);
   el("use", { href: `#i-${it.icon}` }, ico);
   lines.forEach((ln, j) => {
     const t = el("text", { x: cx, y: top + isz + 22 + j * 18 }, g);
     if (outerRing && outer.length > 18) t.style.fontSize = "13.5px";   // crowded outer ring: keep labels inside their segment
     t.textContent = ln;
   });
-  if (it.badge) {   // small pill under the label
-    const by = top + isz + 22 + (lines.length - 1) * 18 + 9;
+  if (it.badge) {   // plan pill left of the icon, shown only in the plan comparison view
+    const by = top + isz / 2 - 8.5;
     const b = el("g", { class: "seg-badge" }, g);
-    el("rect", { x: cx - 30, y: by, width: 60, height: 17, rx: 8.5 }, b);
-    const bt = el("text", { x: cx, y: by + 12 }, b); bt.textContent = it.badge.toUpperCase();
+    el("rect", { x: cx - 46, y: by, width: 48, height: 17, rx: 8.5 }, b);
+    const bt = el("text", { x: cx - 22, y: by + 12 }, b); bt.textContent = it.badge.toUpperCase();
   }
   it.node = g;
   const h = el("path", { d: sector(it.r1, it.r2, it.a0, it.a1), class: "hit", tabindex: "0", role: "button",
@@ -1080,7 +1086,7 @@ function renderItem(it) {
         <div class="tags"><span class="tag solid">${esc(it.avail)}</span>${devTag}</div>
       </div>
     </div>
-    <h2>${esc(it.title)}</h2>
+    <h2>${devMode && it.badge ? `<span class="title-badge">${esc(it.badge)}</span>` : ""}${esc(it.title)}</h2>
     <p class="lead">${esc(it.lead)}</p>
     ${note}
     <ul class="points">${it.points.map(p => `<li>${linkify(esc(p))}</li>`).join("")}</ul>
