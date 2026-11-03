@@ -216,9 +216,11 @@ const TREE = [
         note: "Enter your provider's exact identifier or deployment name for each model." } ] } ] },
   { type: "agent", id: "remediation", name: "Remediation Agent", sub: "remediation agent", color: "var(--ai)", meta: "Cloud · Server", kids: [
     { type: "env", env: "cloud", label: "SonarQube Cloud", logo: "sonarqube-cloud", sub: "Annual Team or Enterprise plan", kids: [
-      { kind: "byo", tag: "Bring your own key", title: "Your OpenAI or Anthropic API key", supply: "Added by an organization admin, at organization level",
-        chips: ["anthropic|Anthropic", "openai|OpenAI"], note: "You choose the provider, not the model." },
-      { kind: "models", tag: "Models · picked by SonarQube Cloud", title: "One model per provider", models: ["claude|Claude Opus 4.6 (Anthropic)", "openai|GPT-5.5 (OpenAI)"] } ] },
+      { kind: "sonar", tag: "Provided by Sonar · new", title: "Sonar-provided LLM key", supply: "Nothing to procure or security-review",
+        note: "Works out of the box: an organization admin enables the Remediation Agent from AI capabilities. Whether you use the Sonar-provided key or your own is set in your subscription." },
+      { kind: "byo", tag: "Or bring your own key", title: "Your OpenAI or Anthropic API key", supply: "Added by an organization admin, at organization level",
+        chips: ["anthropic|Anthropic", "openai|OpenAI"], note: "For teams that prefer their own provider account. You choose the provider, not the model." },
+      { kind: "models", tag: "Models · with your own key", title: "Picked by SonarQube Cloud, one per provider", models: ["claude|Claude Opus 4.6 (Anthropic)", "openai|GPT-5.5 (OpenAI)"] } ] },
     { type: "env", env: "server", label: "SonarQube Server", logo: "sonarqube-server", sub: "2026.5, Enterprise & Data Center", kids: [
       { kind: "models", tag: "Models · choose one", title: "Supported models", models: ["claude|claude-opus-4-6", "openai|gpt-5.5"], note: "Selected by the instance administrator, using your provider's identifier or deployment." },
       { kind: "byo", tag: "Your provider", title: "Any registered provider type", chips: SERVER_PROVIDERS } ] } ] },
