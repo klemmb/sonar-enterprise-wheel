@@ -232,7 +232,8 @@ const TREE = [
         note: "Ollama, LiteLLM and vLLM are examples of gateways. AI CodeFix keeps its own configuration and does not use the instance's LLM provider list." } ] } ] },
   { type: "agent", id: "gitar", name: "Gitar", logo: "gitar", color: "var(--gitar)", meta: "Sonar-hosted SaaS", kids: [
     { type: "env", env: "gitar", label: "Default", sub: "Sonar-hosted SaaS", kids: [
-      { kind: "gitar", tag: "Provided by Gitar", title: "Gitar's own model access", note: "Gitar chooses the model for each task, with zero data retention agreements with all LLM providers." } ] },
+      { kind: "gitar", tag: "Provided by Gitar", title: "Gitar's own model access", models: ["openai|GPT-6.1 Sol (OpenAI Daybreak)"],
+        note: "Gitar chooses the model for each task. Through the OpenAI Daybreak Defense Network, this includes OpenAI's GPT cyber model GPT-6.1 Sol. Zero data retention agreements with all LLM providers." } ] },
     { type: "env", env: "gitar", label: "Bring your own model", sub: "Set up by an organization admin", kids: [
       { kind: "models", tag: "Which models · always Anthropic", title: "Claude Opus, Sonnet and Haiku", models: ["claude|Claude Opus", "claude|Claude Sonnet", "claude|Claude Haiku"],
         note: "Whichever provider you choose, Gitar runs these three models and picks the model for each task. Your account needs access to all three.", kids: [
