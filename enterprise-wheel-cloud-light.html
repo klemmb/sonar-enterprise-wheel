@@ -132,6 +132,11 @@ body {
 .seg.hl:not(.on) path.shape { fill: var(--c); stroke-opacity: 1; }
 .seg.hl:not(.on) .ico { color: #FFFFFF; }
 .seg.hl:not(.on) text { fill: #FFFFFF; }
+.seg .seg-badge rect { fill: var(--c); transition: fill .3s; }
+.seg .seg-badge text { font: 700 9.5px var(--mono); letter-spacing: .12em; fill: #FFFFFF; text-anchor: middle; }
+.seg.on .seg-badge rect, .seg.cur .seg-badge rect, .seg.hl .seg-badge rect { fill: #FFFFFF; }
+.seg.on .seg-badge text, .seg.cur .seg-badge text, .seg.hl .seg-badge text { fill: var(--deep); }
+@media (max-width: 620px) { .seg .seg-badge { display: none; } }   /* labels are hidden on phones too */
 .seg.hl { filter: drop-shadow(0 12px 24px var(--glow)); }
 .hit { fill: transparent; cursor: pointer; outline: none; }
 .hit:focus-visible { stroke: var(--ink); stroke-width: 3; stroke-dasharray: 6 5; }
@@ -811,7 +816,7 @@ const ITEMS = [
     value: "Shorter time to fix and less context switching.",
     chips: [{ label: "Languages", items: ["java", "javascript", "typescript", "python", "csharp", "cplusplus", "html5|HTML", "css3|CSS"] },
             { label: "IDEs and models", items: ["vscode|VS Code", "intellij|IntelliJ", "anthropic|Claude Sonnet 4", "openai|GPT-5.1"] }] },
-  { id: "assurance", g: "ai", short: ["AI Code", "Assurance"], icon: "badge-check", de: 1, avail: PLANS,
+  { id: "assurance", g: "ai", short: ["AI Code", "Assurance"], icon: "badge-check", de: 1, avail: "All plans",
     title: "AI Code Assurance",
     lead: "Holds projects that contain AI-generated code to a stricter, AI-qualified quality gate.",
     points: ["Mark the projects that contain AI-generated code",
@@ -839,7 +844,7 @@ const ITEMS = [
     value: "Secrets are stopped before they reach a commit or an AI prompt, and agents get SonarQube right in the terminal.",
     chips: [{ label: "Agent integrations", items: ["claude|Claude Code", "githubcopilot|Copilot CLI", "openai|Codex", "#Cursor", "googlegemini|Antigravity", "#OpenCode"] },
             { label: "Platforms", items: ["#Linux x64 & ARM64", "#macOS (Apple silicon)", "#Windows x64"] }] },
-  { id: "vortex", g: "ai", short: ["Sonar", "Vortex"], icon: "tornado", de: 1, avail: "Separate subscription · annual Team or Enterprise",
+  { id: "vortex", g: "ai", short: ["Sonar", "Vortex"], icon: "tornado", de: 1, badge: "Annual", avail: "Separate subscription · annual Team or Enterprise",
     title: "Sonar Vortex",
     lead: "Guides your coding agent before it writes, then verifies every change while it works.",
     points: ["Guide: feeds the agent your rules, architecture, license policy and security context",
@@ -849,7 +854,7 @@ const ITEMS = [
              "New: the Vortex dashboard shows impact at organization level, including prevented issues and estimated token savings"],
     value: "In Sonar's controlled refactoring benchmarks, Vortex reduced LLM token consumption by up to 36%.",
     chips: [{ label: "Works with coding agents", items: ["claude|Claude Code", "openai|Codex", "githubcopilot|Copilot CLI", "#Cursor", "googlegemini|Antigravity"] }] },
-  { id: "remediation", g: "ai", short: ["Remediation", "Agent"], icon: "wrench", de: 1, avail: "Separate subscription · annual Team or Enterprise",
+  { id: "remediation", g: "ai", short: ["Remediation", "Agent"], icon: "wrench", de: 1, badge: "Annual", avail: "Separate subscription · annual Team or Enterprise",
     title: "Remediation Agent",
     lead: "Clears the issue backlog by generating fixes and proving them correct before a developer reviews them.",
     points: ["Assign to Agent from the Issues page, Automatic Remediation on a schedule, or PR remediation when a quality gate fails (GitHub and GitLab)",
@@ -995,7 +1000,7 @@ ITEMS.forEach((it, idx) => {
   const outerRing = it.r1 === R.o1;
   const isz = outerRing ? 38 : 40;
   const lines = it.short;
-  const block = isz + 8 + lines.length * 18;
+  const block = isz + 8 + lines.length * 18 + (it.badge ? 24 : 0);
   const top = cy - block / 2;
   const ico = el("svg", { x: cx - isz / 2, y: top, width: isz, height: isz, class: "ico", viewBox: "0 0 24 24" }, g);
   el("use", { href: `#i-${it.icon}` }, ico);
@@ -1004,6 +1009,12 @@ ITEMS.forEach((it, idx) => {
     if (outerRing && outer.length > 18) t.style.fontSize = "13.5px";   // crowded outer ring: keep labels inside their segment
     t.textContent = ln;
   });
+  if (it.badge) {   // small pill under the label
+    const by = top + isz + 22 + (lines.length - 1) * 18 + 9;
+    const b = el("g", { class: "seg-badge" }, g);
+    el("rect", { x: cx - 30, y: by, width: 60, height: 17, rx: 8.5 }, b);
+    const bt = el("text", { x: cx, y: by + 12 }, b); bt.textContent = it.badge.toUpperCase();
+  }
   it.node = g;
   const h = el("path", { d: sector(it.r1, it.r2, it.a0, it.a1), class: "hit", tabindex: "0", role: "button",
     "aria-label": `${it.title}. ${it.avail}` , "data-id": it.id }, hits);
