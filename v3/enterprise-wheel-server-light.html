@@ -601,8 +601,8 @@ kbd { font: 500 11px var(--mono); background: #FFFFFF; border: 1px solid #DCE3EC
     <div class="wheel-col">
       <div class="side-rail">
         <label class="switch pill" for="de-toggle"><input type="checkbox" id="de-toggle"><span class="track"></span>Compare with Developer Edition</label>
-        <label class="switch pill" for="ai-toggle"><input type="checkbox" id="ai-toggle"><span class="track"></span>Grey out paid AI</label>
-        <label class="switch pill" for="sec-toggle"><input type="checkbox" id="sec-toggle"><span class="track"></span>Grey out Advanced Security</label>
+        <label class="switch pill" for="ai-toggle"><input type="checkbox" id="ai-toggle"><span class="track"></span>AI</label>
+        <label class="switch pill" for="sec-toggle"><input type="checkbox" id="sec-toggle"><span class="track"></span>Advanced Security</label>
       </div>
       <div class="wheel-box" id="wheel-box">
         <svg id="wheel" viewBox="0 0 1000 1000" role="group" aria-label="Capability wheel">
@@ -1008,7 +1008,7 @@ ITEMS.forEach((it, idx) => {
   const am = (it.a0 + it.a1) / 2, rm = (it.r1 + it.r2) / 2;
   const [cx, cy] = pt(rm, am);
   Object.assign(it, { cx, cy, color: G.c, deep: G.d });
-  const g = el("g", { class: "seg", "data-id": it.id, "data-g": it.g, "data-de": it.de ? "1" : "0", "data-paid": ["vortex", "remediation", "hunter"].includes(it.id) ? "1" : "0",
+  const g = el("g", { class: "seg", "data-id": it.id, "data-g": it.g, "data-de": it.de ? "1" : "0", "data-paid": ["vortex", "remediation", "hunter"].includes(it.id) || it.g === "gitar" ? "1" : "0",
     style: `--c:${G.c};--deep:${G.d};--fill:color-mix(in srgb, ${G.c} 9%, #FFFFFF);--glow:color-mix(in srgb, ${G.c} 40%, transparent)` }, viz);
   el("path", { d: sector(it.r1, it.r2, it.a0, it.a1), class: "shape" }, g);
   const outerRing = it.r1 === R.o1;

@@ -18,7 +18,7 @@ Each page is self-contained (icons, logos and background music are embedded). Fo
 
 ## Version 3
 
-`v3/` holds the same four wheels with two extra switches under the comparison switch: **Grey out paid AI** (Sonar Vortex, Remediation Agent, Hunter Agent) and **Grey out Advanced Security**, for example https://klemmb.github.io/sonar-enterprise-wheel/v3/enterprise-wheel-server-light.html. The v3 pages are generated from the root pages with `make_v3.py`, so content changes are made once in the root pages.
+`v3/` holds the same four wheels with two extra switches under the comparison switch: **AI**, which greys out the paid AI (Sonar Vortex, Remediation Agent, Hunter Agent and Gitar), and **Advanced Security**, which greys out the Advanced Security group, for example https://klemmb.github.io/sonar-enterprise-wheel/v3/enterprise-wheel-server-light.html. The v3 pages are generated from the root pages with `make_v3.py`, so content changes are made once in the root pages.
 
 ## Controls
 
