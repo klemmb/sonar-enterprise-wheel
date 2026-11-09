@@ -16,6 +16,10 @@ Live site: https://klemmb.github.io/sonar-enterprise-wheel/
 
 Each page is self-contained (icons, logos and background music are embedded). Fonts load from Google Fonts.
 
+## Version 3
+
+`v3/` holds the same four wheels with two extra switches under the comparison switch: **Grey out paid AI** (Sonar Vortex, Remediation Agent, Hunter Agent) and **Grey out Advanced Security**, for example https://klemmb.github.io/sonar-enterprise-wheel/v3/enterprise-wheel-server-light.html. The v3 pages are generated from the root pages with `make_v3.py`, so content changes are made once in the root pages.
+
 ## Controls
 
 - Hover a segment to highlight it; click it to show its details and click it again to hide them; click the center for the overview.
