@@ -595,7 +595,6 @@ kbd { font: 500 11px var(--mono); background: #FFFFFF; border: 1px solid #DCE3EC
 
   <section class="hero">
     <h1>Enterprise plan <em>at a glance</em></h1>
-    <p>Core analysis sits at the center of the wheel. Around it are what the Enterprise plan adds, the Advanced Security capabilities, Sonar's AI products and Gitar. Hover a segment to highlight it, click it to show its details and click it again to hide them.</p>
   </section>
 
   <main class="stage closed" id="stage">
@@ -1334,7 +1333,8 @@ function buildPrintDoc() {
   const doc = document.createElement("div"); doc.id = "print-doc";
   const brand = document.querySelector(".top .brand").outerHTML;
   const h1 = document.querySelector(".hero h1").innerHTML;
-  const hero = esc(document.querySelector(".hero p").textContent);
+  const heroP = document.querySelector(".hero p");   // the intro paragraph was removed from the page; keep the export working without it
+  const hero = heroP ? esc(heroP.textContent) : "";
   const foot = esc(document.querySelector(".foot").textContent);
   const date = new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
   // the wheel at rest: no zoom, no hover state, light tints, ids prefixed so they don't clash with the live wheel
@@ -1365,7 +1365,7 @@ function buildPrintDoc() {
       ${head}
       <div class="pp-cover-grid">
         <div class="pp-wheel">${wheelHTML}</div>
-        <div><h1>${h1}</h1><p class="pp-hero">${hero}</p>${TEXT.ovNote ? `<p class="pp-note">${esc(TEXT.ovNote)}</p>` : ""}<div class="pp-layers">${layers}</div></div>
+        <div><h1>${h1}</h1>${hero ? `<p class="pp-hero">${hero}</p>` : ""}${TEXT.ovNote ? `<p class="pp-note">${esc(TEXT.ovNote)}</p>` : ""}<div class="pp-layers">${layers}</div></div>
       </div>
       <p class="pp-foot">${foot}</p>
     </section>${groups}`;
