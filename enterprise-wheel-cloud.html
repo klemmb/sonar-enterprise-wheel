@@ -1354,6 +1354,8 @@ document.getElementById("de-toggle").addEventListener("change", e => {
   document.body.classList.toggle("dev", on);
   svg.classList.toggle("dev", on);
   hubT1.textContent = on ? TEXT.hubCompare[0] : TEXT.hub[0];
+  const heading = document.querySelector(".hero h1");   // the page heading follows the toggle too, e.g. "Team plan at a glance"
+  if (heading) heading.innerHTML = `${esc((on ? TEXT.hubCompare : TEXT.hub).join(" "))} <em>at a glance</em>`;
   hubT2.textContent = on ? TEXT.hubCompare[1] : TEXT.hub[1];
   if (hubB) hubB.style.display = on ? "none" : "";
   if (state.cur === "__overview") openOverview();
