@@ -16,10 +16,6 @@ Live site: https://klemmb.github.io/sonar-enterprise-wheel/
 
 Each page is self-contained (icons, logos and background music are embedded). Fonts load from Google Fonts.
 
-## Version 2
-
-`v2/` holds the same four wheels with a three-ring layout (core analysis, then Enterprise differentiators, then Advanced Security, AI & agentic products and Gitar on the outside) and no page heading, for example https://klemmb.github.io/sonar-enterprise-wheel/v2/enterprise-wheel-server-light.html. The v2 pages are generated from the root pages with `make_v2.py`, so content changes are made once in the root pages.
-
 ## Controls
 
 - Hover a segment to highlight it; click it to show its details and click it again to hide them; click the center for the overview.
