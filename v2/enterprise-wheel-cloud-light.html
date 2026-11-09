@@ -98,7 +98,15 @@ body {
 
 /* ---------- stage ---------- */
 .stage { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 32px; align-items: start; padding-block: 14px 0; }
-.wheel-col { display: grid; gap: 14px; min-width: 0; }
+.wheel-col { display: grid; gap: 14px; min-width: 0; grid-template-columns: max-content minmax(0, 1fr); align-items: start; }
+.wheel-col > :not(.side-rail) { grid-column: 2; }
+.side-rail { grid-column: 1; grid-row: 1; align-self: center; display: flex; flex-direction: column; gap: 10px; max-width: 170px; }   /* compare switch, left of the wheel */
+.side-rail .switch { white-space: normal; line-height: 1.3; }
+@media (max-width: 760px) {
+  .wheel-col { grid-template-columns: minmax(0, 1fr); }
+  .wheel-col > :not(.side-rail) { grid-column: 1; }
+  .side-rail { grid-row: auto; max-width: none; align-self: start; }
+}
 .wheel-box { position: relative; width: 100%; max-width: 760px; aspect-ratio: 1 / 1; margin: 0 auto; overflow: hidden; border-radius: 32px; }
 #wheel { width: 100%; height: 100%; display: block; overflow: visible; }
 #viz { transform-box: view-box; transform-origin: 0 0; transition: transform .6s var(--ease); }
@@ -577,7 +585,6 @@ kbd { font: 500 11px var(--mono); background: #FFFFFF; border: 1px solid #DCE3EC
       <span class="eyebrow">Enterprise plan · SaaS</span>
     </div>
     <div class="controls">
-      <label class="switch pill" for="de-toggle"><input type="checkbox" id="de-toggle"><span class="track"></span>Compare with Team plan</label>
       <div class="group pill">
         <button class="btn" id="tour" type="button" aria-pressed="false"><svg><use href="#i-play"></use></svg><span>Play tour</span><span class="prog"></span></button>
         <label class="timer" for="tour-secs" title="Seconds per step"><svg><use href="#i-timer"></use></svg><input id="tour-secs" type="number" min="2" max="60" step="1" value="6"><span>s</span></label>
@@ -599,6 +606,9 @@ kbd { font: 500 11px var(--mono); background: #FFFFFF; border: 1px solid #DCE3EC
 
   <main class="stage closed" id="stage">
     <div class="wheel-col">
+      <div class="side-rail">
+        <label class="switch pill" for="de-toggle"><input type="checkbox" id="de-toggle"><span class="track"></span>Compare with Team plan</label>
+      </div>
       <div class="wheel-box" id="wheel-box">
         <svg id="wheel" viewBox="0 0 1000 1000" role="group" aria-label="Capability wheel">
           <g id="viz"></g>
