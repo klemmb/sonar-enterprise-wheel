@@ -131,6 +131,8 @@ body::after {
 .seg.cur path.shape { stroke-width: 2.5; }
 .dev .seg[data-de="0"] { opacity: .12; }
 .dev.focus .seg[data-de="0"].on { opacity: .55; }
+.no-paid-ai .seg[data-paid="1"], .no-adv .seg[data-g="adv"] { opacity: .14; filter: grayscale(1); }
+.no-paid-ai.focus .seg[data-paid="1"].on, .no-adv.focus .seg[data-g="adv"].on { opacity: .6; }
 .hub-disc { fill: url(#hatch); stroke: var(--line); stroke-width: 1.5; }
 .hub-fill { fill: var(--bg-raise); }
 .hub-t1 { font: 600 40px var(--display); fill: var(--fg); text-anchor: middle; }
@@ -289,6 +291,7 @@ kbd { font: 700 11px var(--mono); padding: 2px 6px; border-radius: 5px; border: 
 #print-doc .pp-wheel svg { width: 124mm; height: 124mm; display: block; overflow: visible; }
 #print-doc .seg { opacity: 1 !important; filter: none !important; }
 #print-doc .dev .seg[data-de="0"] { opacity: .2 !important; }
+#print-doc .no-paid-ai .seg[data-paid="1"], #print-doc .no-adv .seg[data-g="adv"] { opacity: .2 !important; }
 #print-doc .seg path.shape { fill: var(--fill); stroke-opacity: .4; }
 #print-doc .seg .ico { color: var(--c); }
 #print-doc .seg text { fill: var(--n8); }
@@ -594,6 +597,8 @@ kbd { font: 700 11px var(--mono); padding: 2px 6px; border-radius: 5px; border: 
     <div class="wheel-col">
       <div class="side-rail">
         <label class="switch" for="de-toggle"><input type="checkbox" id="de-toggle"><span class="track"></span>Compare with Team plan</label>
+        <label class="switch" for="ai-toggle"><input type="checkbox" id="ai-toggle"><span class="track"></span>AI</label>
+        <label class="switch" for="sec-toggle"><input type="checkbox" id="sec-toggle"><span class="track"></span>Advanced Security</label>
       </div>
       <div class="wheel-box" id="wheel-box">
         <svg id="wheel" viewBox="0 0 1000 1000" role="group" aria-label="Capability wheel">
@@ -988,7 +993,7 @@ ITEMS.forEach((it, idx) => {
   const am = (it.a0 + it.a1) / 2, rm = (it.r1 + it.r2) / 2;
   const [cx, cy] = pt(rm, am);
   Object.assign(it, { cx, cy, color: G.c, deep: G.d });
-  const g = el("g", { class: "seg", "data-id": it.id, "data-g": it.g, "data-de": it.de ? "1" : "0",
+  const g = el("g", { class: "seg", "data-id": it.id, "data-g": it.g, "data-de": it.de ? "1" : "0", "data-paid": ["vortex", "remediation", "hunter"].includes(it.id) || it.g === "gitar" ? "1" : "0",
     style: `--c:${G.c};--deep:${G.d};--fill:color-mix(in srgb, ${G.c} 15%, #0F0018)` }, viz);
   el("path", { d: sector(it.r1, it.r2, it.a0, it.a1), class: "shape" }, g);
   const outerRing = it.r1 === R.o1;
@@ -1359,6 +1364,9 @@ window.addEventListener("afterprint", () => {
 document.getElementById("export").addEventListener("click", () => { stopTour(); window.print(); });
 
 /* ---------------- Developer Edition compare ---------------- */
+// AI greys out the paid AI (Vortex, Remediation Agent, Hunter Agent, Gitar); Advanced Security greys out that group
+document.getElementById("ai-toggle").addEventListener("change", e => svg.classList.toggle("no-paid-ai", e.target.checked));
+document.getElementById("sec-toggle").addEventListener("change", e => svg.classList.toggle("no-adv", e.target.checked));
 document.getElementById("de-toggle").addEventListener("change", e => {
   const on = e.target.checked;
   document.body.classList.toggle("dev", on);
